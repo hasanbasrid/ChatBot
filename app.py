@@ -34,9 +34,9 @@ def on_connect():
 def on_disconnect():
     print ('Someone disconnected!')
 
-@socketio.on('new address input')
+@socketio.on('new message input')
 def on_new_address(data):
-    print("Got an event for new address input with data:", data)
+    print("Got an event for new message input with data:", data)
     all_messages.append(data)
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
 

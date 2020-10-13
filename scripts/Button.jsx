@@ -4,7 +4,7 @@ import { Socket } from './Socket';
 function handleSubmit(event) {
     let new_message = document.getElementById("message_input");
 
-    Socket.emit('new item', {
+    Socket.emit('new message input', {
         'message': new_message.value,
     });
     
