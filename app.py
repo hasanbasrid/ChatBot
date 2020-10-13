@@ -5,6 +5,7 @@ import os
 import flask
 import flask_socketio
 import random_name
+from flask import request
 
 MESSAGES_RECEIVED_CHANNEL = 'messages received'
 
@@ -23,12 +24,12 @@ def emit_all_messages(channel):
     })
 
 @socketio.on('connect')
-def on_connect(sid):
+def on_connect():
     print('Someone connected!')
     socketio.emit('connected', {
         'test': 'Connected'
     })
-    user_names['sid'] = random_name.create_random_name()
+    user_names[request.sid] = random_name.create_random_name()
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
 
@@ -37,9 +38,9 @@ def on_disconnect():
     print ('Someone disconnected!')
 
 @socketio.on('new message input')
-def on_new_address(sid, data):
+def on_new_address(data):
     print("Got an event for new message input with data:", data)
-    all_messages.append([user_names[sid], data['message']])
+    all_messages.append([user_names[request.sid], data['message']])
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
 
 @app.route('/')
