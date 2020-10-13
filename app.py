@@ -37,7 +37,7 @@ def on_disconnect():
 @socketio.on('new message input')
 def on_new_address(data):
     print("Got an event for new message input with data:", data)
-    all_messages.append(data)
+    all_messages.append(data['message'])
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
 
 @app.route('/')
