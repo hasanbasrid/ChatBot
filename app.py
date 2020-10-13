@@ -4,16 +4,18 @@ from dotenv import load_dotenv
 import os
 import flask
 import flask_socketio
-
+import random_name
 
 MESSAGES_RECEIVED_CHANNEL = 'messages received'
 
 app = flask.Flask(__name__)
 
+
 socketio = flask_socketio.SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
 
 all_messages = []
+user_names = {}
 
 def emit_all_messages(channel):
     socketio.emit(channel, {
@@ -21,12 +23,12 @@ def emit_all_messages(channel):
     })
 
 @socketio.on('connect')
-def on_connect():
+def on_connect(sid):
     print('Someone connected!')
     socketio.emit('connected', {
         'test': 'Connected'
     })
-    
+    user_names['sid'] = random_name.create_random_name()
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
 
@@ -35,9 +37,9 @@ def on_disconnect():
     print ('Someone disconnected!')
 
 @socketio.on('new message input')
-def on_new_address(data):
+def on_new_address(sid, data):
     print("Got an event for new message input with data:", data)
-    all_messages.append(data['message'])
+    all_messages.append([user_names[sid], data['message']])
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
 
 @app.route('/')
@@ -53,3 +55,6 @@ if __name__ == '__main__':
         port=int(os.getenv('PORT', 8080)),
         debug=True
     )
+
+
+    
