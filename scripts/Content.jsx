@@ -7,6 +7,7 @@ import { Socket } from './Socket';
 
 export function Content() {
     const [messages, setMessages] = React.useState([]);
+    const [users, setUsers] = React.useState();
     
     function getNewMessages() {
         React.useEffect(() => {
@@ -17,13 +18,27 @@ export function Content() {
         });
     }
     
+    function getUsers(){
+        React.useEffect(() => {
+            Socket.on('connected', updateUsers);
+            return () => {
+                Socket.off('connected', updateUsers);
+            }
+        });
+    }
+    
     function updateMessages(data) {
         console.log("Received message from server: " + data['allMessages']);
         setMessages(data['allMessages']);
     }
     
     getNewMessages();
-
+    
+    function updateUsers(data){
+        console.log("Received user count from server: " + data['users']);
+        setUsers(data['users']);
+    }
+    
     return (
         <div>
             <h1>Messages</h1>
@@ -34,6 +49,7 @@ export function Content() {
                     }
                 </ol>
             <Button />
+            <h2>Users = {users}</h2>
         </div>
     );
 }
