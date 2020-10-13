@@ -6,30 +6,31 @@ import { Button } from './Button';
 import { Socket } from './Socket';
 
 export function Content() {
-    const [addresses, setAddresses] = React.useState([]);
+    const [messages, setMessages] = React.useState([]);
     
-    function getNewAddresses() {
+    function getNewMessages() {
         React.useEffect(() => {
-            Socket.on('addresses received', updateAddresses);
+            Socket.on('messages received', updateMessages);
             return () => {
-                Socket.off('addresses received', updateAddresses);
+                Socket.off('messages received', updateMessages);
             }
         });
     }
     
-    function updateAddresses(data) {
-        console.log("Received addresses from server: " + data['allAddresses']);
-        setAddresses(data['allAddresses']);
+    function updateMessages(data) {
+        console.log("Received message from server: " + data['allMessages']);
+        setMessages(data['allMessages']);
     }
     
-    getNewAddresses();
+    getNewMessages();
 
     return (
         <div>
-            <h1>USPS Addresses!</h1>
+            <h1>Messages</h1>
                 <ol>
                     {
-                    // TODO
+                        messages.map(
+                        (message, index) => <li key = {index}>{message}</li>)
                     }
                 </ol>
             <Button />
