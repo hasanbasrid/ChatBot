@@ -2,20 +2,22 @@ import * as React from 'react';
 import { Socket } from './Socket';
 
 function handleSubmit(event) {
-    let newAddress = document.getElementById("address_input");
-    // TODO
+    let new_message = document.getElementById("message_input");
+
+    Socket.emit('new item', {
+        'message': new_message.value,
+    });
     
-    console.log('Sent the address ' + newAddress.value + ' to server!');
-    newAddress.value = ''
-    
+    console.log('Sent message :"' + new_message.value + ' " to server!');
+
     event.preventDefault();
 }
 
 export function Button() {
     return (
         <form onSubmit={handleSubmit}>
-            <input id="address_input" placeholder="Enter a USPS address"></input>
-            <button>Add to DB!</button>
+            <input id="message_input"></input>
+            <button>SEND</button>
         </form>
     );
 }
