@@ -30,7 +30,7 @@ export function Content() {
                 <ol>
                     {
                         messages.map(
-                        (message, index) => <li key = {index}>{message}</li>)
+                        (message, index) => <li key = {index}>{message[0] + " : " + message[1]}</li>)
                     }
                 </ol>
             <Button />
