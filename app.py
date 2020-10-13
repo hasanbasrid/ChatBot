@@ -2,21 +2,23 @@
 from os.path import join, dirname
 from dotenv import load_dotenv
 import os
+import bot
 import flask
 import flask_socketio
 import random_name
 from flask import request
 
 MESSAGES_RECEIVED_CHANNEL = 'messages received'
+BOT_NAME = "UNDECIDED-BOT"
 
 app = flask.Flask(__name__)
-
-
 socketio = flask_socketio.SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
 
+users = 0
 all_messages = []
 user_names = {}
+
 
 def emit_all_messages(channel):
     socketio.emit(channel, {
@@ -26,8 +28,10 @@ def emit_all_messages(channel):
 @socketio.on('connect')
 def on_connect():
     print('Someone connected!')
+    global users
+    users += 1
     socketio.emit('connected', {
-        'test': 'Connected'
+        'users': users
     })
     user_names[request.sid] = random_name.create_random_name()
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
@@ -42,6 +46,12 @@ def on_new_address(data):
     print("Got an event for new message input with data:", data)
     all_messages.append([user_names[request.sid], data['message']])
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
+    
+    bot_answer = bot.command(data['message'])
+    if bot_answer:
+        all_messages.append([BOT_NAME, bot_answer])
+        emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
+    
 
 @app.route('/')
 def index():
