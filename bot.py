@@ -1,6 +1,6 @@
 import requests
 import json
-import json
+import random
 import urllib.parse
 
 def command(text):
@@ -28,7 +28,12 @@ def command(text):
         res = requests.get("https://8ball.delegator.com/magic/JSON/" + question)
         return json.loads(res.text)['magic']['answer']
         
-    elif cmd == "TODO":
-        return ""
+    elif cmd == "roll":
+        if(split_text[2]):
+            num = random.randint(1,int(split_text[2]))
+        else:
+            num = random.randint(1,6)
+        return str(num)
+        
     else:
         return "Command not recognized. Type '!! help' for list of commands"
