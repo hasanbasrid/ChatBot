@@ -18,7 +18,7 @@ export function Content() {
         });
     }
     
-    function getUsers(){
+    function getNewUsers(){
         React.useEffect(() => {
             Socket.on('connected', updateUsers);
             return () => {
@@ -38,6 +38,8 @@ export function Content() {
         console.log("Received user count from server: " + data['users']);
         setUsers(data['users']);
     }
+    
+    getNewUsers();
     
     return (
         <div>
