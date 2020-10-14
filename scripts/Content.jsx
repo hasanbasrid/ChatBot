@@ -42,9 +42,9 @@ export function Content() {
     getNewUsers();
     
     return (
-        <div class="container">
-            <div class="components">
-            <span class="users">Users = {users}</span>
+        <div className="container">
+            <div className="components">
+            <span className="users">Users = {users}</span>
                     <ol>
                         {
                             messages.map(

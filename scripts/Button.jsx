@@ -16,8 +16,8 @@ function handleSubmit(event) {
 export function Button() {
     return (
         <form onSubmit={handleSubmit}>
-            <input class="message-input"></input>
-            <button class="send-button">SEND</button>
+            <input className="message-input"></input>
+            <button className="send-button">SEND</button>
         </form>
     );
 }
