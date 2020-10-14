@@ -27,19 +27,26 @@ def emit_all_messages(channel):
 
 @socketio.on('connect')
 def on_connect():
-    print('Someone connected!')
     global users
     users += 1
-    socketio.emit('connected', {
+    socketio.emit('user count changed', {
         'users': users
     })
     user_names[request.sid] = random_name.create_random_name()
+    print(user_names[request.sid] + ' connected!')
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
 
 @socketio.on('disconnect')
 def on_disconnect():
-    print ('Someone disconnected!')
+    global users
+    users -= 1
+    socketio.emit('user count changed', {
+        'users': users
+    })
+    print (user_names[request.sid] + ' disconnected!')
+    user_names.pop(request.sid)
+    
 
 @socketio.on('new message input')
 def on_new_address(data):

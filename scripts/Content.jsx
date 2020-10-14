@@ -20,9 +20,9 @@ export function Content() {
     
     function getNewUsers(){
         React.useEffect(() => {
-            Socket.on('connected', updateUsers);
+            Socket.on('user count changed',updateUsers);
             return () => {
-                Socket.off('connected', updateUsers);
+                Socket.off('user count changed', updateUsers);
             }
         });
     }
