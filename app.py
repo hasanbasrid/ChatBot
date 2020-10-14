@@ -11,7 +11,7 @@ import models
 from flask import request
 
 MESSAGES_RECEIVED_CHANNEL = 'messages received'
-BOT_NAME = "FUN-BOT"
+BOT_NAME = "1337-BOT"
 
 app = flask.Flask(__name__)
 
@@ -30,7 +30,6 @@ db.app = app
 
 users = 0
 usernames = {}
-
 
 def emit_all_messages(channel):
     all_messages = [[msg.sender, msg.message] for msg in db.session.query(models.Chat).all()]
