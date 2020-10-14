@@ -48,7 +48,11 @@ export function Content() {
                     <ol>
                         {
                             messages.map(
-                           (message, index) => <li key = {index}>{message[0] + " : " + message[1]}</li>)
+                           (message, index) => <li 
+                           style={{color: message[0] === "1337-BOT" ? "darkgreen" : "black"}}
+                           key={index}><span id="username">{message[0] + " : "}
+                           </span>{message[1]}
+                           </li>)
                         }
                     </ol>
             <Button />

@@ -60,3 +60,7 @@ form {
   align-self:center;
   font-size:28pt;
 }
+
+#username{
+  font-weight: bold;
+}
