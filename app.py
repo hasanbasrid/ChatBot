@@ -5,22 +5,35 @@ import os
 import bot
 import flask
 import flask_socketio
+import flask_sqlalchemy
 import random_name
+import models
 from flask import request
 
 MESSAGES_RECEIVED_CHANNEL = 'messages received'
-BOT_NAME = "UNDECIDED-BOT"
+BOT_NAME = "FUN-BOT"
 
 app = flask.Flask(__name__)
+
 socketio = flask_socketio.SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
 
+dotenv_path = join(dirname(__file__), 'sql.env')
+load_dotenv(dotenv_path)
+
+database_uri = os.environ['DATABASE_URL']
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
+
+db = flask_sqlalchemy.SQLAlchemy(app)
+db.app = app
+
 users = 0
-all_messages = []
-user_names = {}
+usernames = {}
 
 
 def emit_all_messages(channel):
+    all_messages = [[msg.sender, msg.message] for msg in db.session.query(models.Chat).all()]
     socketio.emit(channel, {
         'allMessages' : all_messages
     })
@@ -32,8 +45,8 @@ def on_connect():
     socketio.emit('user count changed', {
         'users': users
     })
-    user_names[request.sid] = random_name.create_random_name()
-    print(user_names[request.sid] + ' connected!')
+    usernames[request.sid] = random_name.create_random_name()
+    print(usernames[request.sid] + ' connected!')
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
 
@@ -44,26 +57,29 @@ def on_disconnect():
     socketio.emit('user count changed', {
         'users': users
     })
-    print (user_names[request.sid] + ' disconnected!')
-    user_names.pop(request.sid)
+    print (usernames[request.sid] + ' disconnected!')
+    usernames.pop(request.sid)
     
 
 @socketio.on('new message input')
 def on_new_address(data):
     print("Got an event for new message input with data:", data)
-    all_messages.append([user_names[request.sid], data['message']])
+    db.session.add(models.Chat(usernames[request.sid], data['message']));
+    db.session.commit();
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
     bot_answer = bot.command(data['message'])
     if bot_answer:
-        all_messages.append([BOT_NAME, bot_answer])
+        db.session.add(models.Chat(BOT_NAME, bot_answer));
+        db.session.commit();
         emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
 
 @app.route('/')
 def index():
+    models.db.create_all()
+    db.session.commit()
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
-
     return flask.render_template("index.html")
 
 if __name__ == '__main__': 
