@@ -42,16 +42,21 @@ export function Content() {
     getNewUsers();
     
     return (
-        <div>
-            <h1>Messages</h1>
-                <ol>
-                    {
-                        messages.map(
-                        (message, index) => <li key = {index}>{message[0] + " : " + message[1]}</li>)
-                    }
-                </ol>
+        <div class="container">
+            <div class="components">
+            <span class="users">Users = {users}</span>
+                    <ol>
+                        {
+                            messages.map(
+                           (message, index) => <li 
+                           style={{color: message[0] === "1337-BOT" ? "darkgreen" : "black"}}
+                           key={index}><span id="username">{message[0] + " : "}
+                           </span>{message[1]}
+                           </li>)
+                        }
+                    </ol>
             <Button />
-            <h2>Users = {users}</h2>
+            </div>
         </div>
     );
 }
