@@ -12,7 +12,9 @@ body{
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .components{
+  height:100%;
   display:flex;
   flex-direction:column;
   background: #00ff41;
@@ -23,27 +25,38 @@ body{
 
 ol {
   background: #ffffff;
-  overflow-y: auto;
-  overflow-x: hidden;
   border-radius:15px;
-  
+  list-style-type: none;
+  overflow-y:auto;
+}
+li{
+  font-size:24pt;
 }
 
 form {
   flex-shrink: 0;
+  height:8%;
 }
+
 .message-input{
   border-radius:5px;
   width: 85%;
+  height:100%;
+  font-size:24pt;
 }
+
 .send-button{
   margin-left: 3px;
   width: 14%;
+  height:100%;
   border-radius:5px;
   float:right;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  font-size:28pt;
 }
+
 .users{
   flex-shrink: 0;
   align-self:center;
+  font-size:28pt;
 }

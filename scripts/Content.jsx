@@ -45,12 +45,12 @@ export function Content() {
         <div class="container">
             <div class="components">
             <span class="users">Users = {users}</span>
-                <ol>
-                    {
-                        messages.map(
-                        (message, index) => <li key = {index}>{message[0] + " : " + message[1]}</li>)
-                    }
-                </ol>
+                    <ol>
+                        {
+                            messages.map(
+                           (message, index) => <li key = {index}>{message[0] + " : " + message[1]}</li>)
+                        }
+                    </ol>
             <Button />
             </div>
         </div>
