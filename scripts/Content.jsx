@@ -42,8 +42,9 @@ export function Content() {
     getNewUsers();
     
     return (
-        <div>
-            <h1>Messages</h1>
+        <div class="container">
+            <div class="components">
+            <span class="users">Users = {users}</span>
                 <ol>
                     {
                         messages.map(
@@ -51,7 +52,7 @@ export function Content() {
                     }
                 </ol>
             <Button />
-            <h2>Users = {users}</h2>
+            </div>
         </div>
     );
 }
