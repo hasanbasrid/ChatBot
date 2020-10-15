@@ -8,6 +8,8 @@ import { Socket } from './Socket';
 export function Content() {
     const [messages, setMessages] = React.useState([]);
     const [users, setUsers] = React.useState();
+    const botText = {color:'darkgreen'};
+    const userText = {color:'black'};
     
     function getNewMessages() {
         React.useEffect(() => {
@@ -42,14 +44,14 @@ export function Content() {
     getNewUsers();
     
     return (
-        <div className="container">
-            <div className="components">
-            <span className="users">Users = {users}</span>
+        <div id="container">
+            <div id="components">
+            <span id="users">Users = {users}</span>
                     <ol>
                         {
                             messages.map(
                            (message, index) => <li 
-                           style={{color: message[0] === "1337-BOT" ? "darkgreen" : "black"}}
+                           style={{color: message[0] === "1337-BOT" ? botText : userText}}
                            key={index}><span id="username">{message[0] + " : "}
                            </span>{message[1]}
                            </li>)
