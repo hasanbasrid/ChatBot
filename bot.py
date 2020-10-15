@@ -7,6 +7,8 @@ def command(text):
     split_text = text.split(' ',2)
     
     if split_text[0] != "!!":
+        if text.startswith("!!"):
+            return "Command form is '!! command message'. Type '!! help' for more details"
         return ""
     
     cmd = split_text[1]
