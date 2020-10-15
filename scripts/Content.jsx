@@ -41,6 +41,33 @@ export function Content() {
     
     getNewUsers();
     
+    function Message(props){
+        const username = props.msg[0];
+        const index = props.ind;
+        if(username === "1337-BOT"){
+            return <BotMessage msg ={props.msg} ind={index} />;
+        }
+        else{
+            return <UserMessage msg ={props.msg} ind={index}/>;
+        }
+    }
+    function UserMessage(props){
+        const message = props.msg;
+        const index = props.index;
+        return <li style={{color : 'black'}}
+            key={index}><span id="username">{message[0] + " : "}
+            </span>{message[1]}
+        </li>;
+    }
+    function BotMessage(props){
+        const message = props.msg;
+        const index = props.ind;
+        return <li style={{color : 'darkgreen'}}
+            key={index}><span id="username">{message[0] + " : "}
+            </span><span dangerouslySetInnerHTML={{ __html: message[1] }}/>
+        </li>;
+    }
+    
     return (
         <div id="container">
             <div id="components">
@@ -48,11 +75,7 @@ export function Content() {
                     <ol>
                         {
                             messages.map(
-                           (message, index) => <li 
-                           style={{color: message[0] === "1337-BOT" ? 'darkgreen' : 'black'}}
-                           key={index}><span id="username">{message[0] + " : "}
-                           </span><span dangerouslySetInnerHTML={{ __html: message[1] }}/>
-                           </li>)
+                           (message, index) => <Message msg={message} ind={index}/>)
                         }
                     </ol>
             <Button />
