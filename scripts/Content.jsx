@@ -8,8 +8,6 @@ import { Socket } from './Socket';
 export function Content() {
     const [messages, setMessages] = React.useState([]);
     const [users, setUsers] = React.useState();
-    const botText = {color:'darkgreen'};
-    const userText = {color:'black'};
     
     function getNewMessages() {
         React.useEffect(() => {
@@ -51,7 +49,7 @@ export function Content() {
                         {
                             messages.map(
                            (message, index) => <li 
-                           style={{color: message[0] === "1337-BOT" ? botText : userText}}
+                           style={{color: message[0] === "1337-BOT" ? 'darkgreen' : 'black'}}
                            key={index}><span id="username">{message[0] + " : "}
                            </span>{message[1]}
                            </li>)
