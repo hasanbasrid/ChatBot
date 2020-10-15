@@ -88,3 +88,18 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
  5. Finally use `git push heroku master` to deploy the program. You can use the link in terminal to access your newly deployed site.
     
     
+# Current issues and what to implement next
+
+1. Users currently have random names. Refreshing the page makes the user lose their username and gives them a new one. A login page at the start to have them login with their unique id could solve this issue.
+
+2. Bot does not have a paid subscription to APIs it uses so it has very limited number of calls(5). Moderate use of the bot commands will deplete these very quickly.
+
+3. The page currently loads the whole database on connection. There aren't enough values in the database to make this an issue right now but if the site is actually used, this would be a pretty big connection issue.
+
+# Technical Issues I had to fix
+
+1. When writing the CSS for the project, I used html property `class` to specify which element I was styling. After my input fields returned null values, I realized that something broke the React components, and it was the `class` property of html elements. `className` should be used instead of class when using React. More details at https://reactjs.org/docs/dom-elements.html
+
+2. Bot returns a python string message and line breaks `\n` in this string does not translate into html line breaks when rendering components. I handled it by using <span dangerouslySetInnerHTML={{ __html: message_text }}/> when rendering every message in the list and return `<br>` instead of `\n` from the bot. This also enabled every single user to be able to html inject. So I seperated user texts and bot texts into different components and used conditional rendering. https://reactjs.org/docs/conditional-rendering.html
+
+3. I tried using `React.useEffect(() => Socket.on('connected',updateUsers); Socket.on('disconnected',updateUsers);` to update user count every time someone disconnects or connects but this did not properly update the user count. I changed the two `Socket.on()` functions to only one `Socket.on('user count changed',updateUsers);` which solved the problem.
