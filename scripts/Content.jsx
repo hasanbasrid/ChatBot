@@ -51,7 +51,7 @@ export function Content() {
                            (message, index) => <li 
                            style={{color: message[0] === "1337-BOT" ? 'darkgreen' : 'black'}}
                            key={index}><span id="username">{message[0] + " : "}
-                           </span>{message[1]}
+                           </span><span dangerouslySetInnerHTML={{ __html: message[1] }}/>
                            </li>)
                         }
                     </ol>
