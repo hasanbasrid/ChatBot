@@ -44,7 +44,7 @@ export function Content() {
     return (
         <div id="container">
             <div id="components">
-            <span id="users">Users = {users}</span>
+            <span id="users">Online Users : {users}</span>
                     <ol>
                         {
                             messages.map(

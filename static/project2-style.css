@@ -30,7 +30,7 @@ ol {
   overflow-y:auto;
 }
 li{
-  font-size:24pt;
+  font-size:18pt;
 }
 
 form {
@@ -42,7 +42,6 @@ form {
   border-radius:5px;
   width: 85%;
   height:100%;
-  font-size:24pt;
 }
 
 #send_button{
@@ -52,13 +51,13 @@ form {
   border-radius:5px;
   float:right;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  font-size:28pt;
+  font-size:18pt;
 }
 
 #users{
   flex-shrink: 0;
   align-self:center;
-  font-size:28pt;
+  font-size:24pt;
 }
 
 #username{
