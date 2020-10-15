@@ -15,7 +15,7 @@ def command(text):
     
     if cmd == "help":
         return "You can use these commands in the format '!! command message'\
-        :<br>about - About me!<br>help - This command<br>funtranslate - convert message to leetspeak<br>8ball - Ask a question to 8ball in your message<br>roll - roll a die from 1 to 6, you can set upper limit in message"
+        :<br>about - About me!<br>help - This command<br>funtranslate - Convert message to leetspeak<br>8ball - Ask a question to 8ball in your message<br>roll - Roll a die from 1 to number, 6 if number not specified"
     
     elif cmd == "about":
         return "I'm a Leet Bot that answers to '!! command message'. Type '!! help' to learn more about commands"
