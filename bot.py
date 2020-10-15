@@ -7,7 +7,7 @@ def command(text):
     split_text = text.split(' ',2)
     
     if split_text[0] != "!!":
-        return "Try using the form '!! command message'"
+        return ""
     
     cmd = split_text[1]
     
