@@ -22,18 +22,20 @@ def command(text):
         payload = {'text' : split_text[2]}
         try: 
             res = requests.get("https://api.funtranslations.com/translate/leetspeak.json", params = payload)
+            response = json.loads(res.text)['contents']['translated']
         except KeyError: 
-            return "I'm over my limit for this API call 😩"
-        return json.loads(res.text)['contents']['translated']
+            return "I'm over my limit for this API call"
+        return response;
         
         
     elif cmd == "8ball":
         question = urllib.parse.quote(split_text[2])
         try: 
             res = requests.get("https://8ball.delegator.com/magic/JSON/" + question)
+            response = json.loads(res.text)['contents']['translated']
         except KeyError: 
-            return "I'm over my limit for this API call 😩"
-        return json.loads(res.text)['magic']['answer']
+            return "I'm over my limit for this API call"
+        return response
         
     elif cmd == "roll":
         if(split_text[2]):
