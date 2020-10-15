@@ -7,10 +7,8 @@
   d) `npm install -g webpack`    
   e) `npm install --save-dev webpack`    
   f) `npm install socket.io-client --save`    
-:warning: :warning: :warning: If you see any error messages, make sure you use `sudo pip` or `sudo npm`. If it says "pip cannot be found", run `which pip` and use `sudo [path to pip from which pip] install` :warning: :warning: :warning:    
-2. If you already have psql set up, **SKIP THE REST OF THE STEPS AND JUST DO THE FOLLOWING COMMAND**:   
-`sudo service postgresql start`    
-3. Copy your `sql.env` file into your new directory.
+:warning: If you see any error messages, make sure you use `sudo pip` or `sudo npm`. If it says "pip cannot be found", run `which pip` and use `sudo [path to pip from which pip] install` :warning:    
+2. If you already have psql set up, go to step 7 in Setting up PSQL.   
   
 # Getting PSQL to work with Python  
   
@@ -26,9 +24,9 @@
 2. Initialize PSQL database: `sudo service postgresql initdb`    
 3. Start PSQL: `sudo service postgresql start`    
 4. Make a new superuser: `sudo -u postgres createuser --superuser $USER`    
-    :warning: :warning: :warning: If you get an error saying "could not change directory", that's okay! It worked! :warning: :warning: :warning:    
+     :warning: If you get an error saying "could not change directory", that's okay! It worked! :warning:   
 5. Make a new database: `sudo -u postgres createdb $USER`    
-        :warning: :warning: :warning: If you get an error saying "could not change directory", that's okay! It worked! :warning: :warning: :warning:    
+        :warning: If you get an error saying "could not change directory", that's okay! It worked! :warning:     
 6. Make sure your user shows up:    
     a) `psql`    
     b) `\du` look for your-default-user as a user    
@@ -80,13 +78,13 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
     if it exists you have successfully pushed your database into heroku you can quit with `\q`
     
  4. This repo already has required Heroku files `requirements.txt` and `Procfile`
-    But if you want to set yours separately : use `touch Procfile && echo "web: python app.py > Procfile"` to set up Procfile.
+    But if you want to make yours separately : use `touch Procfile && echo "web: python app.py > Procfile"` to set up Procfile.
     And create requirements.txt and write every dependency in your python files seperated by new lines in it. eg:
     ```
     Flask
     python-dotenv
     ```
     
- 5. Finally use `git push heroku master` to deploy the program. You can use the link in terminal to access your site.
+ 5. Finally use `git push heroku master` to deploy the program. You can use the link in terminal to access your newly deployed site.
     
     
