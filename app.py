@@ -8,6 +8,7 @@ import flask_socketio
 import flask_sqlalchemy
 import models
 from flask import request
+from message_type import get_message_type
 
 MESSAGES_RECEIVED_CHANNEL = 'messages received'
 BOT_NAME = "1337-BOT"
@@ -76,7 +77,7 @@ def on_disconnect():
 @socketio.on('new message input')
 def on_new_message(data):
     print("Got an event for new message input with data:", data)
-    message_type = "TODO"
+    message_type = get_message_type(data['message'])
     user = models.Users.query.get(user_emails[request.sid])
     db.session.add(models.Chat(user.email, data['message'], message_type));
     db.session.commit();
