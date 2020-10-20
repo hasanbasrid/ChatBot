@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { Button } from './Button';
 import { Socket } from './Socket';
+import { GoogleButton } from './GoogleButton';
 
 export function Content() {
     const [messages, setMessages] = React.useState([]);
@@ -70,6 +71,7 @@ export function Content() {
     
     return (
         <div id="container">
+            <GoogleButton/>
             <div id="components">
             <span id="users">Online Users : {users}</span>
                     <ol>
