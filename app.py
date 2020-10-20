@@ -6,7 +6,6 @@ import bot
 import flask
 import flask_socketio
 import flask_sqlalchemy
-import random_name
 import models
 from flask import request
 
@@ -35,7 +34,7 @@ def emit_all_messages(channel):
     messages = db.session.query(models.Chat).all()
     all_messages = []
     for msg in messages:
-        user = models.Users.get(msg.sender)
+        user = models.Users.query.get(msg.sender)
         all_messages.append(msg.msg_type, user.profile_pic, user.name, msg.message)
     socketio.emit(channel, {
         'allMessages' : all_messages
@@ -50,10 +49,10 @@ def on_connect():
 def authorize(data):
     global users
     users += 1
-    user = models.Users.get(data['email'])
     user_emails[request.sid] = data['email']
+    user = models.Users.query.get(user_emails[request.sid])
     if not user:
-        db.session.add(models.Users(data['email'], data['name'], data['profile_pic']));
+        db.session.add(models.Users(data['email'], data['name'], data['imageURL']));
         db.session.commit();
     else:
         user.name = data['name']
@@ -77,7 +76,7 @@ def on_disconnect():
 def on_new_message(data):
     print("Got an event for new message input with data:", data)
     message_type = "TODO"
-    user = models.Users.get(user_emails[request.sid])
+    user = models.Users.query.get(user_emails[request.sid])
     db.session.add(models.Chat(user.email, data['message'], message_type));
     db.session.commit();
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
