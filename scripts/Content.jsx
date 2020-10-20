@@ -43,7 +43,7 @@ export function Content() {
     getNewUsers();
     
     function Message(props){
-        const username = props.msg[0];
+        const username = props.msg[2];
         const index = props.ind;
         if(username === "1337-BOT"){
             return <BotMessage msg ={props.msg} ind={index} />;
@@ -56,16 +56,16 @@ export function Content() {
         const message = props.msg;
         const index = props.index;
         return <li style={{color : 'black'}}
-            key={index}><span id="username">{message[0] + " : "}
-            </span>{message[1]}
+            key={index}><span id="username">{message[2] + " : "}
+            </span>{message[3]}
         </li>;
     }
     function BotMessage(props){
         const message = props.msg;
         const index = props.ind;
         return <li style={{color : 'darkgreen'}}
-            key={index}><span id="username">{message[0] + " : "}
-            </span><span dangerouslySetInnerHTML={{ __html: message[1] }}/>
+            key={index}><span id="username">{message[2] + " : "}
+            </span><span dangerouslySetInnerHTML={{ __html: message[3] }}/>
         </li>;
     }
     
