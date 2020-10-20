@@ -29,26 +29,41 @@ db = flask_sqlalchemy.SQLAlchemy(app)
 db.app = app
 
 users = 0
-usernames = {}
+user_emails = {}
 
 def emit_all_messages(channel):
-    all_messages = [[msg.sender, msg.message] for msg in db.session.query(models.Chat).all()]
+    messages = db.session.query(models.Chat).all()
+    all_messages = []
+    for msg in messages:
+        user = models.Users.get(msg.sender)
+        all_messages.append(msg.msg_type, user.profile_pic, user.name, msg.message)
     socketio.emit(channel, {
         'allMessages' : all_messages
     })
 
 @socketio.on('connect')
 def on_connect():
+    print('Someone connected!')
+    
+
+@socketio.on('new google user')
+def authorize(data):
     global users
     users += 1
+    user = models.Users.get(data['email'])
+    user_emails[request.sid] = data['email']
+    if not user:
+        db.session.add(models.Users(data['email'], data['name'], data['profile_pic']));
+        db.session.commit();
+    else:
+        user.name = data['name']
+        user.profile_pic = data['profile_pic']
+        db.session.commit();
+
     socketio.emit('user count changed', {
         'users': users
     })
-    usernames[request.sid] = random_name.create_random_name()
-    print(usernames[request.sid] + ' connected!')
-    emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
-
 @socketio.on('disconnect')
 def on_disconnect():
     global users
@@ -56,20 +71,20 @@ def on_disconnect():
     socketio.emit('user count changed', {
         'users': users
     })
-    print (usernames[request.sid] + ' disconnected!')
-    usernames.pop(request.sid)
-    
+    user_emails.pop(request.sid)
 
 @socketio.on('new message input')
-def on_new_address(data):
+def on_new_message(data):
     print("Got an event for new message input with data:", data)
-    db.session.add(models.Chat(usernames[request.sid], data['message']));
+    message_type = "TODO"
+    user = models.Users.get(user_emails[request.sid])
+    db.session.add(models.Chat(user.email, data['message'], message_type));
     db.session.commit();
     emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
     bot_answer = bot.command(data['message'])
     if bot_answer:
-        db.session.add(models.Chat(BOT_NAME, bot_answer));
+        db.session.add(models.Chat(BOT_NAME, bot_answer, message_type));
         db.session.commit();
         emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     
