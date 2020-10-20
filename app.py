@@ -35,7 +35,7 @@ def emit_all_messages(channel):
     all_messages = []
     for msg in messages:
         user = models.Users.query.get(msg.sender)
-        all_messages.append(msg.msg_type, user.profile_pic, user.name, msg.message)
+        all_messages.append([msg.msg_type, user.profile_pic, user.name, msg.message])
     socketio.emit(channel, {
         'allMessages' : all_messages
     })
@@ -50,13 +50,14 @@ def authorize(data):
     global users
     users += 1
     user_emails[request.sid] = data['email']
+    print(user_emails)
     user = models.Users.query.get(user_emails[request.sid])
     if not user:
         db.session.add(models.Users(data['email'], data['name'], data['imageURL']));
         db.session.commit();
     else:
         user.name = data['name']
-        user.profile_pic = data['profile_pic']
+        user.profile_pic = data['imageURL']
         db.session.commit();
 
     socketio.emit('user count changed', {

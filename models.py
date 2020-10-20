@@ -28,4 +28,4 @@ class Users(db.Model):
         self.profile_pic = profile_pic
     
     def __repr__(self):
-        return '<User: profilepic: {} name : {} email: {}>'.format(self.profile_pi, self.email, self.name)
+        return '<User: profilepic: {} name : {} email: {}>'.format(self.profile_pic, self.email, self.name)

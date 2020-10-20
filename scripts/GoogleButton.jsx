@@ -4,10 +4,11 @@ import GoogleLogin from 'react-google-login'
 
 function handleSuccessfulLogin(response) {
     // TODO replace with name from oauth
+    console.log(response)
     Socket.emit('new google user', {
-        'email':response.profileObj.email,
-        'name':response.profileObj.name,
-        'profile_pic': response.profileObj.imageURL
+        'email' : response.profileObj.email,
+        'name' : response.profileObj.name,
+        'imageURL': response.profileObj.imageUrl
     });
 }
 
