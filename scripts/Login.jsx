@@ -3,7 +3,7 @@ import { GoogleButton } from './GoogleButton';
 
 export function Login(props){
     return  <div id="login">
-                <span id ="login_text"> Log in to participate in chat </span>
+                <span id ="login_text"> Login to participate in chat : </span>
                 <GoogleButton />
             </div>;
 }

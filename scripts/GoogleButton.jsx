@@ -3,13 +3,15 @@ import { Socket } from './Socket';
 import GoogleLogin from 'react-google-login'
 
 function handleSuccessfulLogin(response) {
-    // TODO replace with name from oauth
     console.log(response)
     Socket.emit('new google user', {
         'email' : response.profileObj.email,
         'name' : response.profileObj.name,
         'imageURL': response.profileObj.imageUrl
     });
+    
+    document.getElementById("message_input").disabled = false;
+    document.getElementById("send_button").disabled = false;
 }
 
 export function GoogleButton() {
