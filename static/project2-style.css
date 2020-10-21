@@ -25,6 +25,7 @@ body{
 
 #login{
   background: #00ff41;
+  border-radius:15px;
 }
 
 #profile_picture{

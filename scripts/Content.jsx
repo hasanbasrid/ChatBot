@@ -10,7 +10,7 @@ import { Form } from './Form';
 export function Content() {
     return (
         <div id="container">
-            <Login />
+            <Login/>
             <div id="components">
                 <Users />
                 <MessageList />
