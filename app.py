@@ -12,7 +12,7 @@ from message_type import get_message_type
 
 MESSAGES_RECEIVED_CHANNEL = 'messages received'
 BOT_NAME = "1337-BOT"
-
+BOT_PICTURE = "https://static-cdn.jtvnw.net/emoticons/v1/28/3.0"
 app = flask.Flask(__name__)
 
 socketio = flask_socketio.SocketIO(app)
@@ -35,8 +35,11 @@ def emit_all_messages(channel):
     messages = db.session.query(models.Chat).all()
     all_messages = []
     for msg in messages:
-        user = models.Users.query.get(msg.sender)
-        all_messages.append([msg.msg_type, user.profile_pic, user.name, msg.message])
+        if(msg.sender == BOT_NAME):
+            all_messages.append([msg.msg_type, BOT_PICTURE, BOT_NAME, msg.message])
+        else:
+            user = models.Users.query.get(msg.sender)
+            all_messages.append([msg.msg_type, user.profile_pic, user.name, msg.message])
     socketio.emit(channel, {
         'allMessages' : all_messages
     })
@@ -90,7 +93,7 @@ def on_new_message(data):
     
     bot_answer = bot.command(data['message'])
     if bot_answer:
-        db.session.add(models.Chat(BOT_NAME, bot_answer, message_type));
+        db.session.add(models.Chat(BOT_NAME, bot_answer, 'text'));
         db.session.commit();
         emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     

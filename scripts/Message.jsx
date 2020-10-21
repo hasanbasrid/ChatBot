@@ -45,6 +45,7 @@ export function Message(props){
         const message = props.msg;
         const index = props.ind;
         return <li style={{color : 'darkgreen'}} key={index}>
+        <img id="profile_picture" src={message[1]}/>
         <span id="username">{message[2] + " : "}</span>
         <span dangerouslySetInnerHTML={{ __html: message[3] }}/>
         </li>;
