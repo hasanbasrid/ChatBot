@@ -43,6 +43,7 @@ def emit_all_messages(channel):
 
 @socketio.on('connect')
 def on_connect():
+    emit_all_messages(MESSAGES_RECEIVED_CHANNEL)
     print('Someone connected!')
     
 
