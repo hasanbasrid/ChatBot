@@ -23,11 +23,25 @@ body{
   padding:10px;
 }
 
+#login{
+  background: #00ff41;
+}
+
+#profile_picture{
+  width: 40px;
+  height: 40px;
+}
+
+#inline_image{
+  max-width: 100%;
+  padding:2px;
+}
 ol {
   background: #ffffff;
   border-radius:15px;
   list-style-type: none;
   overflow-y:auto;
+  height:70%;
 }
 li{
   font-size:18pt;
@@ -36,6 +50,11 @@ li{
 form {
   flex-shrink: 0;
   height:8%;
+}
+
+#login_text{
+  margin: auto;
+  font-size:24pt;
 }
 
 #message_input{
