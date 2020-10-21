@@ -72,11 +72,12 @@ def authorize(data):
 @socketio.on('disconnect')
 def on_disconnect():
     global users
-    users -= 1
+    if (user_emails.pop(request.sid, None)):
+        users -= 1
     socketio.emit('user count changed', {
         'users': users
     })
-    user_emails.pop(request.sid)
+    
 
 @socketio.on('new message input')
 def on_new_message(data):
