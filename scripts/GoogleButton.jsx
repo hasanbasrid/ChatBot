@@ -12,6 +12,7 @@ function handleSuccessfulLogin(response) {
     
     document.getElementById("message_input").disabled = false;
     document.getElementById("send_button").disabled = false;
+    document.getElementById("login").style.display = "none";
 }
 
 export function GoogleButton() {
