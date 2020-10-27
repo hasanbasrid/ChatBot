@@ -1,4 +1,4 @@
-# Set up React  
+# Set up React and Install Dependencies
 0. `git clone https://github.com/NJIT-CS490/project2-m1-hbd3/ && cd project2-m1-hbd3`    
 1. Install your stuff!    
   a) `npm install`    
@@ -6,7 +6,10 @@
   c) `pip install eventlet`    
   d) `npm install -g webpack`    
   e) `npm install --save-dev webpack`    
-  f) `npm install socket.io-client --save`    
+  f) `npm install socket.io-client --save` 
+  g) `pip install flask`
+  h) `pip install pythondotenv`
+  i) `pip install rfc3987`
 :warning: If you see any error messages, make sure you use `sudo pip` or `sudo npm`. If it says "pip cannot be found", run `which pip` and use `sudo [path to pip from which pip] install` :warning:    
 2. If you already have psql set up, go to step 7 in Setting up PSQL.   
   
@@ -90,16 +93,12 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
     
 # Current issues and what to implement next
 
-1. Users currently have random names. Refreshing the page makes the user lose their username and gives them a new one. A login page at the start to have them login with their unique id could solve this issue.
+1. Users can't participate in chat without logging in, but login part should not be rendered if a user is already logged in. I could not figure out a good way to not render it, but I would work on that if I had more time.
 
-2. Bot does not have a paid subscription to APIs it uses so it has very limited number of calls(5). Moderate use of the bot commands will deplete these very quickly.
-
-3. The page currently loads the whole database on connection. There aren't enough values in the database to make this an issue right now but if the site is actually used, this would be a pretty big connection issue.
+2. Extra login options for users without google accounts should definitely be implemented since this version does not let any user without google authentication send messages in chat.
 
 # Technical Issues I had to fix
 
-1. When writing the CSS for the project, I used html property `class` to specify which element I was styling. After my input fields returned null values, I realized that something broke the React components, and it was the `class` property of html elements. `className` should be used instead of class when using React. More details at https://reactjs.org/docs/dom-elements.html
+1. Querying from a database using a primary key is better done with get() method rather than filter_by() since get returns a single object, and primary keys can only exist once in the database. Learning this made it easier for me to search with emails to get profile picture and name data from the users database.
 
-2. Bot returns a python string message and line breaks `\n` in this string does not translate into html line breaks when rendering components. I handled it by using <span dangerouslySetInnerHTML={{ __html: message_text }}/> when rendering every message in the list and return `<br>` instead of `\n` from the bot. This also enabled every single user to be able to html inject. So I seperated user texts and bot texts into different components and used conditional rendering. https://reactjs.org/docs/conditional-rendering.html
-
-3. I tried using `React.useEffect(() => Socket.on('connected',updateUsers); Socket.on('disconnected',updateUsers);` to update user count every time someone disconnects or connects but this did not properly update the user count. I changed the two `Socket.on()` functions to only one `Socket.on('user count changed',updateUsers);` which solved the problem.
+2. When rendering messages from the database, rather than keeping the messages in html tags for image and url type messages, I found out it is better to pass it to the client and conditionally render it based on what type of message it is and keep only the url links or links to images in the chat database.
