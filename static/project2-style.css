@@ -43,9 +43,14 @@ ol {
   list-style-type: none;
   overflow-y:auto;
   height:70%;
+  max-width:100%;
+  overflow-x:hidden;
+  
 }
 li{
   font-size:18pt;
+  max-width: 100%;
+  word-break: break-all;
 }
 
 form {
