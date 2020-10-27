@@ -89,16 +89,5 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
     ```
     
  5. Finally use `git push heroku master` to deploy the program. You can use the link in terminal to access your newly deployed site.
-    
-    
-# Current issues and what to implement next
-
-1. Users can't participate in chat without logging in, but login part should not be rendered if a user is already logged in. I could not figure out a good way to not render it, but I would work on that if I had more time.
-
-2. Extra login options for users without google accounts should definitely be implemented since this version does not let any user without google authentication send messages in chat.
-
-# Technical Issues I had to fix
-
-1. Querying from a database using a primary key is better done with get() method rather than filter_by() since get returns a single object, and primary keys can only exist once in the database. Learning this made it easier for me to search with emails to get profile picture and name data from the users database.
-
-2. When rendering messages from the database, rather than keeping the messages in html tags for image and url type messages, I found out it is better to pass it to the client and conditionally render it based on what type of message it is and keep only the url links or links to images in the chat database.
+   
+   
