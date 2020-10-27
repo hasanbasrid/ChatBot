@@ -14,8 +14,7 @@ def command(text):
     cmd = split_text[1]
     
     if cmd == "help":
-        return "You can use these commands in the format '!! command message'\
-        :<br>about - About me!<br>help - This command<br>funtranslate - Convert message to leetspeak<br>8ball - Ask a question to 8ball in your message<br>roll - Roll a die from 1 to number, 6 if number not specified"
+        return "You can use these commands in the format '!! command message':<br>about - About me!<br>help - This command<br>funtranslate - Convert message to leetspeak<br>8ball - Ask a question to 8ball in your message<br>roll - Roll a die from 1 to number, 6 if number not specified"
     
     elif cmd == "about":
         return "I'm a Leet Bot that answers to '!! command message'. Type '!! help' to learn more about commands"
