@@ -66,62 +66,68 @@ class MessageTypeTestCase(unittest.TestCase):
             expected = test[KEY_EXPECTED]
             self.assertNotEqual(response, expected[KEY_MESSAGE_TYPE])
             
-    class BotCommandTestCase(unittest.TestCase):
+class BotCommandTestCase(unittest.TestCase):
         
-        def setUp(self):
-            self.success_test_params = [
-                {
-                    KEY_INPUT: "!! help",
-                    KEY_EXPECTED: {
-                        KEY_BOT_ANSWER : "You can use these commands in the format '!! command message':<br>about - About me!<br>help - This command<br>funtranslate - Convert message to leetspeak<br>8ball - Ask a question to 8ball in your message<br>roll - Roll a die from 1 to number, 6 if number not specified"
-                    }
-                },
-                {
-                    KEY_INPUT: "!! about",
-                    KEY_EXPECTED: {
-                        KEY_BOT_ANSWER : "I'm a Leet Bot that answers to '!! command message'. Type '!! help' to learn more about commands"
-                    }
-                },
-                {
-                    KEY_INPUT: "!!help",
-                    KEY_EXPECTED: {
-                        KEY_BOT_ANSWER : "Command form is '!! command message'. Type '!! help' for more details"
-                    }
-                },
-                {
-                    KEY_INPUT: "help",
-                    KEY_EXPECTED: {
-                        KEY_BOT_ANSWER : ""
-                    }
-                },
-            ]
-            self.failure_test_params = [
-                {
-                    KEY_INPUT: "!!help",
-                    KEY_EXPECTED: {
-                        KEY_BOT_ANSWER : "You can use these commands in the format '!! command message'\
-                        :<br>about - About me!<br>help - This command<br>funtranslate - Convert message to leetspeak<br>8ball - Ask a question to 8ball in your message<br>roll - Roll a die from 1 to number, 6 if number not specified"
-                    }
-                },
-                {
-                    KEY_INPUT: "!!!!!!help",
-                    KEY_EXPECTED: {
-                        KEY_BOT_ANSWER : "I'm a Leet Bot that answers to '!! command message'. Type '!! help' to learn more about commands"
-                    }
+    def setUp(self):
+        self.success_test_params = [
+            {
+                KEY_INPUT: "!! help",
+                KEY_EXPECTED: {
+                    KEY_BOT_ANSWER : "You can use these commands in the format '!! command message':<br>about - About me!<br>help - This command<br>funtranslate - Convert message to leetspeak<br>8ball - Ask a question to 8ball in your message<br>roll - Roll a die from 1 to number, 6 if number not specified"
                 }
-            ]
-        
-        def test_command_success(self):
-            for test in self.success_test_params:
-                response = command(test[KEY_INPUT])
-                expected = test[KEY_EXPECTED]
-                self.assertEqual(response, expected[KEY_BOT_ANSWER])
-                
-        def test_command_failure(self):
-            for test in self.failure_test_params:
-                response = command(test[KEY_INPUT])
-                expected = test[KEY_EXPECTED]
-                self.assertNotEqual(response, expected[KEY_BOT_ANSWER])
+            },
+            {
+                KEY_INPUT: "!! about",
+                KEY_EXPECTED: {
+                KEY_BOT_ANSWER : "I'm a Leet Bot that answers to '!! command message'. Type '!! help' to learn more about commands"
+                }
+            },
+            {
+                KEY_INPUT: "!!help",
+                KEY_EXPECTED: {
+                    KEY_BOT_ANSWER : "Command form is '!! command message'. Type '!! help' for more details"
+                }
+            },
+            {
+                KEY_INPUT: "help",
+                KEY_EXPECTED: {
+                    KEY_BOT_ANSWER : ""
+                }
+            },
+            {
+                KEY_INPUT: "!! unrecognized",
+                KEY_EXPECTED: {
+                    KEY_BOT_ANSWER : "Command not recognized. Type '!! help' for list of commands"
+                }
+            },
+        ]
+        self.failure_test_params = [
+            {
+                KEY_INPUT: "!!help",
+                KEY_EXPECTED: {
+                    KEY_BOT_ANSWER : "You can use these commands in the format '!! command message'\
+                    :<br>about - About me!<br>help - This command<br>funtranslate - Convert message to leetspeak<br>8ball - Ask a question to 8ball in your message<br>roll - Roll a die from 1 to number, 6 if number not specified"
+                }
+            },
+            {
+                KEY_INPUT: "!!!!!!help",
+                KEY_EXPECTED: {
+                    KEY_BOT_ANSWER : "I'm a Leet Bot that answers to '!! command message'. Type '!! help' to learn more about commands"
+                }
+            }
+        ]
+    
+    def test_command_success(self):
+        for test in self.success_test_params:
+            response = command(test[KEY_INPUT])
+            expected = test[KEY_EXPECTED]
+            self.assertEqual(response, expected[KEY_BOT_ANSWER])
+            
+    def test_command_failure(self):
+        for test in self.failure_test_params:
+            response = command(test[KEY_INPUT])
+            expected = test[KEY_EXPECTED]
+            self.assertNotEqual(response, expected[KEY_BOT_ANSWER])
 
 
 
