@@ -13,6 +13,7 @@ class Chat(db.Model):
         self.sender = usr
         self.message = msg
         self.msg_type = msg_type
+        
     def __repr__(self):
         return '<Message: %s>' % self.message
         
