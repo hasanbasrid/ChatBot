@@ -1,5 +1,5 @@
 import * as React from 'react';
 
-export function Input(props){
-    return <input id="message_input" disabled></input>;
+export function Input() {
+  return <input id="message_input" disabled />;
 }
